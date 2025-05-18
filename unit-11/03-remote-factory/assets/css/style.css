@@ -1,0 +1,36 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+.car {
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 6px;
+}
+.details {
+  margin-top: 0.5rem;
+  display: none;
+}
+.details.visible {
+  display: block;
+}
+.error {
+  color: red;
+  margin: 1rem 0;
+}
+label {
+  display: block;
+  margin: 0.5rem 0 0.2rem;
+}
+input,
+select {
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Controllable animation of a cat walking from left to right. The user can start, stop, and adjust the speed using buttons.."
+    />
+    <meta name="author" content="Massimo Musso" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="./assets/scripts/main.js" defer></script>
+    <title>Cat Walk</title>
+  </head>
+  <body style="position: relative">
+    <div id="controls">
+      <button id="startBtn">Start</button>
+      <button id="fasterBtn" disabled>Faster</button>
+      <button id="slowerBtn" disabled>Slower</button>
+      <button id="stopBtn" disabled>Stop</button>
+      <div id="info">Speed: 50ms</div>
+    </div>
+    <img
+    id="cat"
+      style="position: absolute"
+      src="http://www.anniemation.com/clip_art/images/cat-walk.gif"
+    />
+  </body>
+</html>

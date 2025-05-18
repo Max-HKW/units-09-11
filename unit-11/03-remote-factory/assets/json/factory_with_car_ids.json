@@ -1,0 +1,6 @@
+{
+  "id": "factory1",
+  "name": "Sunrise Auto Works",
+  "location": "Detroit, MI",
+  "carIds": ["car1", "car3", "car5"]
+}

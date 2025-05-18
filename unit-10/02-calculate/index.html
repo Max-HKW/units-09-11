@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This script performs basic mathematical operations (square, halve, percentage, and circle area) based on user input, and shows the results either on button click or Enter key press."
+    />
+    <meta name="author" content="Massimo Musso" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="./assets/scripts/main.js" defer></script>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <label
+      >Square this number:
+      <input type="number" id="square-input" size="2" name="pow" />
+    </label>
+    <button id="square-button">Calculate</button>
+    <br />
+    <label
+      >Halve this number:
+      <input type="number" id="halve-input" size="2" name="/" />
+    </label>
+    <button id="halve-button">Calculate</button>
+    <br />
+    <label>
+      <input type="number" id="percentage-base" />
+      % of
+    </label>
+    <label
+      >this number:
+      <input type="number" id="percentage-input" name="percentage" />
+    </label>
+    <button id="percentage-button">Calculate</button>
+    <br />
+    <label
+      >Area circle:
+      <input type="number" id="area-input" name="circle-area" />
+    </label>
+    <button id="area-button">Calculate</button>
+
+    <div id="solution"></div>
+  </body>
+</html>

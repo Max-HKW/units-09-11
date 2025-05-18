@@ -1,0 +1,16 @@
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+    }
+
+    h2 {
+      font-family: Arial, sans-serif;
+    }

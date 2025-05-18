@@ -1,0 +1,14 @@
+#loadingMessage {
+  font-weight: bold;
+  color: gray;
+}
+#errorMessage {
+  color: red;
+  font-weight: bold;
+}
+.car {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  border-radius: 8px;
+}

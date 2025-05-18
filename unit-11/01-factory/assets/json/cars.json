@@ -1,0 +1,57 @@
+[
+  {
+    "id": "car1",
+    "make": "Toyota",
+    "model": "Camry",
+    "year": 2022,
+    "isElectric": false,
+    "features": ["Bluetooth", "Backup Camera"],
+    "specs": { "engine": "2.5L", "horsepower": 203 },
+    "previousOwner": null,
+    "factoryId": "factory1"
+  },
+  {
+    "id": "car2",
+    "make": "Tesla",
+    "model": "Model 3",
+    "year": 2023,
+    "isElectric": true,
+    "features": ["Autopilot", "Touchscreen"],
+    "specs": { "engine": "Electric", "horsepower": 283 },
+    "previousOwner": null,
+    "factoryId": "factory2"
+  },
+  {
+    "id": "car3",
+    "make": "Ford",
+    "model": "F-150",
+    "year": 2021,
+    "isElectric": false,
+    "features": ["Tow Package", "Heated Seats"],
+    "specs": { "engine": "3.3L", "horsepower": 290 },
+    "previousOwner": "John Doe",
+    "factoryId": "factory1"
+  },
+  {
+    "id": "car4",
+    "make": "Chevrolet",
+    "model": "Bolt EV",
+    "year": 2022,
+    "isElectric": true,
+    "features": ["Wireless Charging", "Lane Assist"],
+    "specs": { "engine": "Electric", "horsepower": 200 },
+    "previousOwner": null,
+    "factoryId": "factory2"
+  },
+  {
+    "id": "car5",
+    "make": "Honda",
+    "model": "Civic",
+    "year": 2020,
+    "isElectric": false,
+    "features": ["Remote Start", "Apple CarPlay"],
+    "specs": { "engine": "2.0L", "horsepower": 158 },
+    "previousOwner": "Emily Clark",
+    "factoryId": "factory1"
+  }
+]

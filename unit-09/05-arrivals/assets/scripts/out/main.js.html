@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file main.js
+ * @author Massimo Musso
+ * @description Simulates a real-time flight departure board using OOP and DOM manipulation.
+ */
+
+/**
+ * Waits for a specified number of milliseconds.
+ * @param {number} ms - The number of milliseconds to wait.
+ * @returns {Promise&lt;void>}
+ */
+function waitFor(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Represents a single flight and handles its status lifecycle.
+ */
+class Flight {
+  /**
+   * @constructor
+   * @param {Object} flightData - Flight information.
+   * @param {string} flightData.date - Date of departure (format: dd-mm).
+   * @param {string} flightData.hour - Departure hour (format: HH:MM).
+   * @param {string} flightData.destination - Destination city.
+   * @param {string} flightData.flight - Flight number.
+   * @param {string} flightData.notes - Additional notes.
+   * @param {string} flightData.airplane - Aircraft model.
+   * @param {string} flightData.checkin - Check-in counter.
+   */
+  constructor({ date, hour, destination, flight, notes, airplane, checkin }) {
+    this.date = date;
+    this.hour = hour;
+    this.destination = destination;
+    this.flight = flight;
+    this.notes = notes;
+    this.airplane = airplane;
+    this.checkin = checkin;
+    this.status = 'DEPARTING';
+    this.createdAt = Date.now(); // Timestamp
+
+    this.startStatusCycle(); // Begin automatic status updates
+  }
+
+  /**
+   * Starts the asynchronous status update cycle.
+   */
+  startStatusCycle() {
+    this.runStatusCycle();
+  }
+
+  /**
+   * Updates the flight status over time.
+   * Simulates ON_TIME, DELAYED, ARRIVED transitions and removal after arrival.
+   * @async
+   */
+  async runStatusCycle() {
+    const board = FlightBoard.getInstance();
+
+    await waitFor(10000); // Wait 10 seconds
+    this.status = 'ON_TIME';
+    board.render();
+
+    await waitFor(10000); // Wait another 10 seconds
+    this.status = Math.random() &lt; 0.3 ? 'DELAYED' : 'ARRIVED';
+    board.render();
+
+    if (this.status === 'ARRIVED') {
+      await waitFor(60000); // Wait 60 seconds before removal
+      board.removeFlight(this);
+    } else if (this.status === 'DELAYED') {
+      await waitFor(10000); // Wait 10 seconds as delayed
+      this.status = 'ARRIVED';
+      board.render();
+      await waitFor(60000); // Then wait 60 seconds before removal
+      board.removeFlight(this);
+    }
+  }
+
+  /**
+   * Returns a string of HTML representing the table row for this flight.
+   * @returns {string} HTML table row.
+   */
+  toRowHTML() {
+    const delayedClass = this.status === 'DELAYED' ? 'delayed' : '';
+    return `
+      &lt;tr class="${delayedClass}">
+        &lt;td>${this.date}&lt;/td>
+        &lt;td>${this.hour}&lt;/td>
+        &lt;td>${this.destination}&lt;/td>
+        &lt;td>${this.flight}&lt;/td>
+        &lt;td>${this.notes}&lt;/td>
+        &lt;td>${this.airplane}&lt;/td>
+        &lt;td>${this.checkin}&lt;/td>
+        &lt;td>${this.status}&lt;/td>
+      &lt;/tr>
+    `;
+  }
+}
+
+/**
+ * Singleton class that manages the list of flights and renders them.
+ */
+class FlightBoard {
+  /**
+   * @constructor
+   */
+  constructor() {
+    /** @type {Flight[]} */
+    this.flights = [];
+
+    /** @type {HTMLElement} */
+    this.tableBody = document.getElementById('flight-table-body');
+
+    FlightBoard._instance = this; // Singleton instance
+  }
+
+  /**
+   * Gets the singleton instance of the FlightBoard.
+   * @returns {FlightBoard}
+   */
+  static getInstance() {
+    return FlightBoard._instance || new FlightBoard();
+  }
+
+  /**
+   * Adds a new flight to the board and starts its lifecycle.
+   * @param {Object} flightData - The flight data.
+   */
+  addFlight(flightData) {
+    const flight = new Flight(flightData);
+    this.flights.push(flight);
+    this.render();
+  }
+
+  /**
+   * Removes a flight from the board.
+   * @param {Flight} flight - The flight to remove.
+   */
+  removeFlight(flight) {
+    this.flights = this.flights.filter(f => f !== flight);
+    this.render();
+  }
+
+  /**
+   * Renders the current flight list in the table.
+   */
+  render() {
+    // Sorting by combined date and hour (converted to timestamp)
+    this.flights.sort((a, b) => {
+      const toTimestamp = f => new Date(`2025-${f.date.split('-').reverse().join('-')}T${f.hour}`).getTime();
+      return toTimestamp(a) - toTimestamp(b);
+    });
+
+    this.tableBody.innerHTML = this.flights.map(f => f.toRowHTML()).join('');
+  }
+}
+
+// === FLIGHT TEMPLATES ===
+
+/**
+ * @type {Object[]} - Predefined flight data used to simulate new incoming flights.
+ */
+const templates = [
+  {
+    date: '13-04',
+    hour: '13:10',
+    destination: 'TEL-AVIV',
+    flight: 'FR5902',
+    notes: 'BOARDING',
+    airplane: '73H',
+    checkin: 'A',
+  },
+  {
+    date: '13-04',
+    hour: '14:20',
+    destination: 'FRANKFURT',
+    flight: 'EN8845',
+    notes: 'EXPECTED DEPARTURE AT 14:45',
+    airplane: 'E95',
+    checkin: 'C',
+  },
+  {
+    date: '13-04',
+    hour: '14:25',
+    destination: 'MANCHESTER',
+    flight: 'LS936',
+    notes: '-',
+    airplane: '73H',
+    checkin: 'D',
+  },
+  {
+    date: '13-04',
+    hour: '14:55',
+    destination: 'KRAKOW',
+    flight: 'FR5905',
+    notes: '-',
+    airplane: '7M8',
+    checkin: 'A',
+  },
+  {
+    date: '13-04',
+    hour: '15:05',
+    destination: 'REGGIO CALABRIA',
+    flight: 'FR8595',
+    notes: '-',
+    airplane: '73H',
+    checkin: 'A',
+  },
+  {
+    date: '13-04',
+    hour: '15:10',
+    destination: 'MALAGA',
+    flight: 'FR5921',
+    notes: '-',
+    airplane: '73H',
+    checkin: 'A',
+  },
+];
+
+// === SIMULATION LOOP ===
+
+const board = FlightBoard.getInstance();
+
+// Every 10 seconds, add a random flight to the board
+setInterval(() => {
+  const template = templates[Math.floor(Math.random() * templates.length)];
+  board.addFlight(template);
+}, 10000);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Flight.html">Flight</a></li><li><a href="FlightBoard.html">FlightBoard</a></li></ul><h3>Global</h3><ul><li><a href="global.html#templates">templates</a></li><li><a href="global.html#waitFor">waitFor</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Apr 13 2025 17:10:03 GMT+0200 (Ora legale dell’Europa centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

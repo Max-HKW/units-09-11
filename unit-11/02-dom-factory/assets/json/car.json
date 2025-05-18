@@ -1,0 +1,14 @@
+{
+  "id": "car1",
+  "make": "Toyota",
+  "model": "Camry",
+  "year": 2022,
+  "isElectric": false,
+  "features": ["Bluetooth", "Backup Camera", "Cruise Control"],
+  "specs": {
+    "engine": "2.5L",
+    "horsepower": 203,
+    "transmission": "Automatic"
+  },
+  "previousOwner": null
+}

@@ -1,0 +1,14 @@
+{
+  "id": "factory1",
+  "name": "Sunrise Auto Works",
+  "location": "Detroit, MI",
+  "established": 1985,
+  "isOperational": true,
+  "departments": ["Assembly", "Painting", "Inspection"],
+  "manager": {
+    "name": "Alice Johnson",
+    "experienceYears": 15,
+    "isCertified": true
+  },
+  "notes": null
+}
