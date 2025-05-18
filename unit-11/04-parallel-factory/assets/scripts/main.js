@@ -1,5 +1,5 @@
 /**
- * @file script.js
+ * @file main.js
  * @description Loads factory and car data from multiple JSONBlob URLs in parallel and displays them on the page.
  * @author Massimo Musso
  */
